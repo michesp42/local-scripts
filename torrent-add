@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+
+#
+# AUTHOR:      Michael Espena <michael.esp42@pm.me>
+# DATE:        Mon Oct 10 02:08:10 PM PST 2022
+# DESCRIPTION: mime map script for adding a magnet link to transmission; starts
+#              the transmission-daemon if it's not running and sends a
+#              notification when a torrent is added to transmission
+#
+
+#
+# CREDIT: https://www.youtube.com/watch?v=MXKGLTSS4Z0&t=320s
+#
+
+pgrep -x transmission-daemon >/dev/null || transmission-daemon
+transmission-remote --add "$@" && notify-send "transmission-daemon" "Torrent added."
