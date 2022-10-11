@@ -1,16 +1,20 @@
 #!/usr/bin/env sh
 
+#
 # AUTHOR:      Michael Espena <michael.esp42@pm.me>
 # DATE:        Mon Oct 10 02:08:10 PM PST 2022
 # DESCRIPTION: A script to create scratchpads (limited to terminal-based
 #              programs only)
+#
 
+#
 # CREDIT: This is script is based on Jake@Linux's
 # (https://www.youtube.com/c/JakeLinux) Youtube video tutorial entitled "Script
 # to allow window manager agnostic scratchpads"
 # (https://www.youtube.com/watch?v=su5cqjVYFcs&t=705s).
 #
 # Basically, I learned about `xdotool` from him.
+#
 
 
 # set the wm_name, `scpd`, to "scratchpad" by default if no argument was given
