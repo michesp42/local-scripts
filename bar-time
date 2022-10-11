@@ -1,0 +1,41 @@
+#!/usr/bin/env sh
+
+#
+# AUTHOR:      Michael Espena <michael.esp42@pm.me>
+# DATE:        Tue Oct 11 08:08:22 PM PST 2022
+# DESCRIPTION: Script for the time module in polybar
+#
+
+#
+# The final output of this script is the result of the date command in the last
+# line of this file and that is all the time module for polybar really needs.
+# In my polybar set up I'm using the builtin battery module. Upon reading
+# polybar's documentation it does not seem that I can use the battery module to
+# send notifications when the battery level is already full or low. Since this
+# script does not do much anyway I going to use this to check the battery level
+# and send battery level related notifications. In this way I don't have to add
+# another `custom/script` module just for that purpose.
+#
+
+battery_level=$(cat /sys/class/power_supply/BAT0/capacity)
+battery_status=$(cat /sys/class/power_supply/BAT0/status)
+battery_low_level=20
+battery_full_level=99
+warning_already_exists=$(xdotool search --onlyvisible --name "Dunst")
+
+
+if [ "$battery_level" -lt "$battery_low_level" -a \
+  "$battery_status" = "Discharging" ]; then
+
+  [ -z "$warning_already_exists" ] && DISPLAY=:0 notify-send \
+    --urgency=critical "Battery low" "Please, charge immediately."
+
+elif [ "$battery_level" -gt "$battery_full_level" -a \
+  "$battery_status" = "Full" ]; then
+
+  [ -z "$warning_already_exists" ] && DISPLAY=:0 notify-send \
+    --urgency=critical "Battery full" "You may now unplug the charger."
+
+fi
+
+date +%H:%M
