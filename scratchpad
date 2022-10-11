@@ -1,0 +1,39 @@
+#!/usr/bin/env sh
+
+# AUTHOR:      Michael Espena <michael.esp42@pm.me>
+# DATE:        Mon Oct 10 02:08:10 PM PST 2022
+# DESCRIPTION: A script to create scratchpads (limited to terminal-based
+#              programs only)
+
+# CREDIT: This is script is based on Jake@Linux's
+# (https://www.youtube.com/c/JakeLinux) Youtube video tutorial entitled "Script
+# to allow window manager agnostic scratchpads"
+# (https://www.youtube.com/watch?v=su5cqjVYFcs&t=705s).
+#
+# Basically, I learned about `xdotool` from him.
+
+
+# set the wm_name, `scpd`, to "scratchpad" by default if no argument was given
+if [ -z "$1" ]; then
+  scpd="scratchpad"
+else
+  scpd="$1"
+fi
+
+# This if-else part is not so robust and scalable but I think this script will
+# not grow to something more complicated than just launching scratchpads of
+# terminal apps. And I'm not running this script in the terminal but via
+# keybindings only
+if xdotool search --name "$scpd" 1>/dev/null; then
+  xdotool search --onlyvisible --name "$scpd" windowunmap ||
+    xdotool search --name "$scpd" windowmap
+else
+  case "$scpd" in
+  scratchpad)
+    alacritty --class scratchpad,scratchpad --title scratchpad &
+    ;;
+  *)
+    alacritty --class "$scpd",scratchpad --title "$scpd" -e "$scpd" &
+    ;;
+  esac
+fi
