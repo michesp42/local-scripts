@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+#
+# AUTHOR:      Michael Espena <michael.esp42@pm.me>
+# DATE:        Tue Oct 11 01:04:45 PM PST 2022
+# DESCRIPTION: Script for the brightness module in polybar
+#
+
+brightness=$(($(brightnessctl get) * 100 / $(brightnessctl max)))
+warning_already_exists=$(xdotool search --onlyvisible --name "Dunst")
+
+if [ "$brightness" -gt 65 ]; then
+  [ -z "$warning_already_exists" ] && DISPLAY=:0 notify-send --urgency=critical \
+    "Screen may be too bright" "Please wear eye protection."
+fi
+
+echo "$brightness"%
