@@ -1,0 +1,7 @@
+
+#+TITLE: Local scripts
+#+AUTHOR: Michael Espeña <michael.esp42@pm.me>
+#+DATE: 2022-10-11 09:42 
+#+DESCRIPTION: README for my local scripts repository
+
+This directory contains various utility shell scripts used for my tiling window manager setup.
