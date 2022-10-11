@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+# AUTHOR:      Michael Espena <michael.esp42@pm.me>
+# DATE:        Tue Oct 11 02:05:00 PM PST 2022
+# DESCRIPTION: Script for the cutom/script memory module in polybar
+
+free --mebi | sed -n '2{p;q}' | awk '{printf ("%2.2fGiB/%2.2fGiB\n", ( $3 / 1024), ($2 / 1024))}'
