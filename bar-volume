@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+
+#
+# AUTHOR:      Michael Espena <michael.esp42@pm.me>
+# DATE:        Tue Oct 11 08:45:46 PM PST 2022
+# DESCRIPTION: Script for the volume module in polybar
+#
+
+#
+# TODO: Actually base the volume level warnings on the decibel level that is
+# harmful for human hearing and not just on the relative percentage of the
+# volume to the maximum volume.
+#
+
+volume=$(amixer sget PCM | grep 'Front Left:' | cut -d' ' -f7 | tr -d '[]%')
+warning_already_exists=$(xdotool search --onlyvisible --name "Dunst")
+
+if [ "$volume" -gt 60 ]; then
+  [ -z "$warning_already_exists" ] && DISPLAY=:0 notify-send \
+    --urgency=critical "Volume too high" \
+    "Listening to high volume for a long\ntime will damage your hearing!"
+fi
+
+echo "$volume"%
