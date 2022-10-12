@@ -23,15 +23,14 @@ battery_low_level=20
 battery_full_level=99
 warning_already_exists=$(xdotool search --onlyvisible --name "Dunst")
 
-
-if [ "$battery_level" -lt "$battery_low_level" -a \
-  "$battery_status" = "Discharging" ]; then
+if [ "$battery_level" -lt "$battery_low_level" ] &&
+  [ "$battery_status" = "Discharging" ]; then
 
   [ -z "$warning_already_exists" ] && DISPLAY=:0 notify-send \
     --urgency=critical "Battery low" "Please, charge immediately."
 
-elif [ "$battery_level" -gt "$battery_full_level" -a \
-  "$battery_status" = "Full" ]; then
+elif [ "$battery_level" -gt "$battery_full_level" ] &&
+  [ "$battery_status" = "Full" ]; then
 
   [ -z "$warning_already_exists" ] && DISPLAY=:0 notify-send \
     --urgency=critical "Battery full" "You may now unplug the charger."
