@@ -12,5 +12,11 @@
 # CREDIT: https://www.youtube.com/watch?v=MXKGLTSS4Z0&t=320s
 #
 
+#
+# DEPENDENCIES:
+#   - transmission-daemon (from transmission-cli)
+#   - notify-send (from libnotify)
+#
+
 pgrep -x transmission-daemon >/dev/null || transmission-daemon
 transmission-remote --add "$@" && notify-send "transmission-daemon" "Torrent added."

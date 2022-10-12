@@ -6,6 +6,11 @@
 # DESCRIPTION: Script for the brightness module in polybar
 #
 
+#
+# DEPENDENCIES:
+#   - brightnessctl
+#   - xdotool
+
 brightness=$(($(brightnessctl get) * 100 / $(brightnessctl max)))
 warning_already_exists=$(xdotool search --onlyvisible --name "Dunst")
 
