@@ -1,0 +1,50 @@
+#!/usr/bin/env sh
+
+#
+# AUTHOR:       Michael Espena <michael.esp42@pm.me>
+# DATE:         Wed Oct 12 05:53:26 PM PST 2022
+# DESCRIPTION:  Script to set wallpaper
+#
+
+#
+# DEPENDENCIES:
+#   - identify (from ImageMagick)
+#   - xwallpaper
+#   - notify-send (from libnotify)
+#   - wallpaper image files
+#
+
+# probably not needed but exported just in case for notify-send
+export DISPLAY=:0
+
+# function to check if randomly selected filepath is indeed a valid png or jpeg
+# file although
+__is_png_or_jpg() {
+  case "$1" in
+  *.png) identify "$1" | grep 'PNG' ;;
+  *.jpg | *.jpeg) identify "$1" | grep 'JPEG' ;;
+  esac
+}
+
+# if filepath was provided as an argument try to set a randomly selected image
+# from the wallpapers directory as wallpaper
+if [ -z "$1" ]; then
+  wallpaper_dir="$XDG_DATA_HOME/wallpapers/nord"
+
+  while [ -z "$(__is_png_or_jpg "$random_wallpaper")" ]; do
+    random_wallpaper=$(find "$wallpaper_dir" -type f -iname "*.png" -o -iname \
+      "*.jpg" -o -iname "*.jpeg" | shuf | head -n1)
+  done
+
+  if xwallpaper --stretch "$random_wallpaper"; then
+    exit 0
+  else
+    notify-send "Failed to set wallpaper."
+    exit 1
+  fi
+fi
+
+# try to set provided filepath as wallpaper
+if [ -n "$(__is_png_or_jpg "$1")" ]; then
+  xwallpaper --stretch "$1" || notify-send "Failed to set wallpaper."
+fi
