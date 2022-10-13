@@ -16,6 +16,12 @@
 # Basically, I learned about `xdotool` from him.
 #
 
+#
+# DEPENDENCIES:
+#   - xdotool
+#   - alacritty (or any other terminal emulator that has an option to set its
+#     WM_CLASS)
+#
 
 # set the wm_name, `scpd`, to "scratchpad" by default if no argument was given
 if [ -z "$1" ]; then
