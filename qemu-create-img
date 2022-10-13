@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+#
+# AUTHOR:      Michael Espena <michael.esp42@pm.me>
+# DATE:        Thu Oct 13 09:15:05 AM PST 2022
+# DESCRIPTION: Script to create a virtual hard disk(?) for a VM
+#
+
+#
+# DEPENDENCIES:
+#   - qemu-system_x86_64
+#
+
+if [ $# -ne 2 ]; then
+  echo "Usage: qemu-create-img <image-name> <image-size>" >&2
+  exit 1
+fi
+
+qemu-img create -f qcow "$1" "$2"
