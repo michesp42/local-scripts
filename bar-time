@@ -18,23 +18,21 @@
 #
 
 BATTERY_LOW_LEVEL=20
-BATTERY_FULL_LEVEL=99
+BATTERY_FULL_FILE=/tmp/batter_full_file
 
 battery_level=$(cat /sys/class/power_supply/BAT0/capacity)
 battery_status=$(cat /sys/class/power_supply/BAT0/status)
-warning_already_exists=$(xdotool search --onlyvisible --name "Dunst")
 
 if [ "$battery_level" -lt "$BATTERY_LOW_LEVEL" ] &&
   [ "$battery_status" = "Discharging" ]; then
 
-  [ -z "$warning_already_exists" ] && DISPLAY=:0 notify-send \
-    --urgency=critical "Battery low" "Please, charge immediately."
+  notify-send --urgency=critical "Battery low" "Please, charge immediately."
+  rm -f "$BATTERY_FULL_FILE"
 
-elif [ "$battery_level" -gt "$BATTERY_FULL_LEVEL" ] &&
-  [ "$battery_status" = "Full" ]; then
+elif [ "$battery_status" = "Full" ] && [ ! -f "$BATTERY_FULL_FILE" ]; then
 
-  [ -z "$warning_already_exists" ] && DISPLAY=:0 notify-send \
-    "Battery full" "You may now unplug the charger."
+  notify-send "Battery full" "You may now unplug the charger."
+  touch "$BATTERY_FULL_FILE"
 
 fi
 
