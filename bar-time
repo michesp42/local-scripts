@@ -34,7 +34,7 @@ elif [ "$battery_level" -gt "$BATTERY_FULL_LEVEL" ] &&
   [ "$battery_status" = "Full" ]; then
 
   [ -z "$warning_already_exists" ] && DISPLAY=:0 notify-send \
-    --urgency=critical "Battery full" "You may now unplug the charger."
+    "Battery full" "You may now unplug the charger."
 
 fi
 
