@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+
+#
+# AUTHOR:      Michael Espena <michael.esp42@pm.me>
+# DATE:        Sun Oct 23 10:32:10 AM PST 2022
+# DESCRIPTION: A script to download fetch-master-6000, just in case it has an
+#              update
+#
+
+#
+# DEPENDENCIES:
+#   - curl
+#   - chmod
+#
+
+url="https://raw.githubusercontent.com/anhsirk0/fetch-master-6000/master/fm6000.pl"
+fm6000="$HOME/.local/bin/fm6000"
+
+curl "$url" --output "$fm6000"
+chmod 744 "$fm6000"
